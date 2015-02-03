@@ -1,5 +1,5 @@
 class Movie < ActiveRecord::Base
-
+  
   has_many :reviews
 
   validates :title,
@@ -14,13 +14,12 @@ class Movie < ActiveRecord::Base
   validates :description,
     presence: true
 
-  validates :poster_image_url,
-    presence: true
-
   validates :release_date,
     presence: true
 
   validate :release_date_is_in_the_future
+
+  mount_uploader :poster, AvatarUploader
 
   def review_average
     if reviews.size>0
@@ -37,6 +36,12 @@ class Movie < ActiveRecord::Base
     if release_date.present?
       errors.add(:release_date, "should probably be in the future") if release_date < Date.today
     end
+  end
+
+  private
+
+  def poster_params
+    params.require(:movie).permit(:image, :remote_image_url)
   end
 
 end

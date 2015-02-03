@@ -1,4 +1,4 @@
-<%= form_for @movie do |f| %>
+<%= form_for @movie, :html=>{:multipart => true} do |f| %>
 
   <% if @movie.errors.any? %>
     <div>
@@ -28,9 +28,12 @@
     <%= f.number_field "runtime_in_minutes" %>
   </div>
   <div>
-    <%= f.label "poster_image_url" %><br>
-    <%= f.text_field "poster_image_url" %>
+    <%= f.label "poster" %><br>
+    <%= f.file_field :poster %> <br>
+    <%= f.label :poster, "or image URL" %><br />
+    <%= f.text_field :poster_image_url %>
   </div>
+
   <div>
     <%= f.label "description" %><br>
     <%= f.text_area "description" %>
