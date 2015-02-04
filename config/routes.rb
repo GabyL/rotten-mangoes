@@ -11,9 +11,15 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   root to: 'movies#index'
 
-  namespace :admin do
-    resources :users
+  concern :paginatable do
+    get '(page/:page)', :action => :index, :on => :collection, :as => ''
   end
+
+  namespace :admin do
+    resources :users, :concerns => :paginatable
+  end
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
