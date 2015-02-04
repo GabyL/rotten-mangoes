@@ -41,8 +41,9 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
     @user.destroy
-    redirect_to movies_path
+    redirect_to admin_user_path(@current_user)
   end
 
   protected
