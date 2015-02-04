@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  USERS = { "gabby" => "gabby1" }
   protected
 
   def restrict_access
@@ -17,5 +18,19 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_user
+
+  def authenticate
+    authenticate_or_request_with_http_digest do |username|
+      USERS[username]
+    end
+  end
+
+  def restrict_normal_users
+    if !current_user.admin?
+      flash[:alert] = "You are not an admin."
+      redirect_to new_session_path
+    end
+  end
+
 
 end
