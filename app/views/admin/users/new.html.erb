@@ -30,5 +30,19 @@
     <%= f.label "password_confirmation" %><br>
     <%= f.password_field "password_confirmation" %>
   </div>
+  <br>
+
+  <%= hidden_field_tag :admin, false %>
+  <div>
+    <%= check_box_tag :admin, checked = true %> Admin? <br>
+  </div>
+
   <div><%= f.submit "Submit" %></div>
+
+
+
 <% end %>
+
+
+
+
