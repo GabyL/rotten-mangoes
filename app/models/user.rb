@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   paginates_per 10
 
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
 
   has_secure_password
 
