@@ -18,6 +18,12 @@ class Admin::UsersController < ApplicationController
       render :new
     end
   end
+
+  def show
+    @users = User.page(params[:page])
+    render :show
+  end
+
   protected
 
   def user_params

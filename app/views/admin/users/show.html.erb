@@ -1,1 +1,16 @@
-show.html.erb
+<table>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Email</th>
+<th>Admin?</th>
+  <% @users.per(10).each do |user|%>
+    <tr>
+      <td><%=user.firstname%></td>
+      <td><%=user.lastname%></td>
+      <td><%=user.email%></td>
+      <td><%=user.admin%></td>
+    <tr>
+  <%end%>
+</table>
+
+<%= paginate @users, :outer_window => 3 %>
