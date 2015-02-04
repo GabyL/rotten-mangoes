@@ -38,10 +38,10 @@ class Movie < ActiveRecord::Base
     end
   end
 
-  private
+  # private
 
-  def poster_params
-    params.require(:movie).permit(:image, :remote_image_url)
-  end
+  # def poster_params
+  #   params.require(:movie).permit(:image, :remote_image_url)
+  # end
 
 end
