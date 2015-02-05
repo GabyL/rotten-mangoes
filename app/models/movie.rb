@@ -21,10 +21,16 @@ class Movie < ActiveRecord::Base
 
   mount_uploader :poster, AvatarUploader
 
-  scope :search_title, ->(movie_title) { where("title like ?", movie_title) }
-  scope :search_director, ->(director) { where("director like ?", director) }
   scope :runtime_greater_than, ->(min_time) { where("runtime_in_minutes > ?", min_time)}
   scope :runtime_less_than, ->(max_time) { where("runtime_in_minutes < ?", max_time)}
+
+  scope :search_title_or_director, -> (title_or_director) { 
+    where(("title like ? collate nocase or director like ? collate nocase"), "%#{title_or_director}%", "%#{title_or_director}%")
+  }
+
+  # scope :search_title, ->(movie_title) { where("title like ?", movie_title) }
+  # scope :search_director, ->(director) { where("director like ?", director) }
+
 
   def review_average
     if reviews.size>0
@@ -37,7 +43,7 @@ class Movie < ActiveRecord::Base
 
   class << self
 
-    def search(movie_title, director, run_time)
+    def search(title_or_director, run_time)
 
       found_movies = self.all
 
@@ -52,13 +58,17 @@ class Movie < ActiveRecord::Base
         found_movies
       end
 
-      if director.present?
-        found_movies = found_movies.search_director(director)
+      if title_or_director.present?
+        found_movies = found_movies.search_title_or_director(title_or_director)
       end
 
-      if movie_title.present?
-        found_movies = found_movies.search_title(movie_title)
-      end
+      # if director.present?
+      #   found_movies = found_movies.search_director(director)
+      # end
+
+      # if movie_title.present?
+      #   found_movies = found_movies.search_title(movie_title)
+      # end
 
       found_movies #is this necesssary???
     end
