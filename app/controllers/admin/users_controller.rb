@@ -41,6 +41,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    UserMailer.rekt_email(@user).deliver
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
     @user.destroy
     redirect_to admin_user_path(@current_user)
