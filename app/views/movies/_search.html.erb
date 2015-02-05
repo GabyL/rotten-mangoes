@@ -1,9 +1,6 @@
 <%= form_tag(movies_path, method: "get") do %>
-  <%= label_tag :title_search, "Movie:"%>
-  <%= text_field_tag :title_search, params[:title_search] %>
-
-  <%= label_tag :director_search, "Director: "%>
-  <%= text_field_tag :director_search, params[:director_search] %>
+  <%= label_tag :title_or_director_search, "Movie or Director:"%>
+  <%= text_field_tag :title_or_director_search, params[:title_or_director_search] %>
 
   <%= select_tag :runtime_in_minutes, options_for_select([['All',4],['Under 90 minutes',1],['Between 90-120 minutes',2],['Over 120 minutes',3]])%>
   <%= submit_tag "Search", name: nil%>
