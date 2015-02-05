@@ -25,7 +25,7 @@ class Movie < ActiveRecord::Base
   scope :runtime_less_than, ->(max_time) { where("runtime_in_minutes < ?", max_time)}
 
   scope :search_title_or_director, -> (title_or_director) { 
-    where(("title like ? collate nocase or director like ? collate nocase"), title_or_director, title_or_director)
+    where(("title like ? collate nocase or director like ? collate nocase"), "%#{title_or_director}%", "%#{title_or_director}%")
   }
 
   # scope :search_title, ->(movie_title) { where("title like ?", movie_title) }
