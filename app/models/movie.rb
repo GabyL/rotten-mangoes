@@ -30,6 +30,35 @@ class Movie < ActiveRecord::Base
   end
 
 
+  class << self
+
+    def search(movie_title, director, run_time)
+
+      if run_time
+        case run_time
+        when '1'
+          found_runtimes = where("runtime_in_minutes < 90")
+        when '2'
+          found_runtimes = where("90 < runtime_in_minutes").where("runtime_in_minutes< 120")
+        when '3'
+          found_runtimes = where("runtime_in_minutes > 120")
+        when '4'
+          found_runtimes = where("runtime_in_minutes")
+        end
+        if director != ""
+          found_directors = found_runtimes.where("director like ?", director)
+          if movie_title != ""
+            found_titles = found_directors.where("title like ?", movie_title)
+          else
+            found_directors
+          end
+        else
+          found_titles = found_runtimes.where("title like ?", movie_title)
+        end
+      end
+    end
+  end
+
   protected
 
   def release_date_is_in_the_future
